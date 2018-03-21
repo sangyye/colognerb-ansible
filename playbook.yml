@@ -1,0 +1,38 @@
+---
+- hosts: webserver
+  user: root
+
+  tasks:
+  - name: install packages
+    apt:
+      name: "{{ item }}"
+      state: present
+      update_cache: yes
+    with_items:
+      - ruby
+
+  - name: install gems
+    gem:
+      name: "{{ item }}"
+      include_doc: no
+      state: present
+    with_items:
+      - sinatra
+
+  - name: create folder
+    file:
+      dest: /var/www/ruby
+      state: directory
+
+  - name: copy webscript
+    copy:
+      src: files/webserver.rb
+      dest: /var/www/ruby/webserver.rb
+
+  - name: install rubyweb systemd unit file
+    copy:
+      src: rubyweb.service
+      dest: /etc/systemd/system/rubyweb.service
+
+  - name: make sure sinatra webapp is running
+    systemd: state=started name=rubyweb daemon_reload=yes

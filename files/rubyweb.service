@@ -1,0 +1,9 @@
+[Unit]
+Description=Simple ruby webserver
+
+[Service]
+User=root
+Group=root
+WorkingDirectory=/var/www/ruby
+Restart=always
+ExecStart=/usr/bin/ruby webserver.rb
