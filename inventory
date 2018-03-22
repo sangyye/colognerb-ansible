@@ -1,2 +1,2 @@
 [webserver]
-159.89.104.62 ansible_user=root
+example.com ansible_user=root

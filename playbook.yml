@@ -5,11 +5,9 @@
   tasks:
   - name: install packages
     apt:
-      name: "{{ item }}"
+      name: ruby
       state: present
       update_cache: yes
-    with_items:
-      - ruby
 
   - name: install gems
     gem:
@@ -35,4 +33,7 @@
       dest: /etc/systemd/system/rubyweb.service
 
   - name: make sure sinatra webapp is running
-    systemd: state=started name=rubyweb daemon_reload=yes
+    systemd: 
+      state: started
+      name: rubyweb
+      daemon_reload: yes
